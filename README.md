@@ -14,14 +14,23 @@ This Python script parses PDF files and extracts information from them, saving t
 * pytesseract
 
 ### Installation
-
-1. Install the dependencies on requirements.txt
-
-   ```python-repl
+1. Create a conda virtual environment
+   ```
+   conda create --name parser-puu python=3.11
+   ```
+2. Install the dependencies on requirements.txt
+   ```
    pip install -r requirements.txt
    ```
-2. Run the code (Using a virtual environement is highly advised)
-
-   ```python-repl
+3. Install poppler-utils
+   ```
+   sudo apt-get install poppler-utils
+   ```
+4. Install poppler via conda
+   ```
+   conda install -c conda-forge poppler
+   ```
+5. Run the code
+   ```
    python parse_ocr.py
    ```
