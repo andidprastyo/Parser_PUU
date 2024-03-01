@@ -6,7 +6,7 @@ import pytesseract
 # File paths
 pdf_file_path = '../Data/91~PMK.01~2017Per.pdf'
 output_json_file = './parsed_data_1.json'
-poppler_path = '/usr/bin'
+poppler_path = '/home/ubuntu/miniconda3/envs/parser-puu/bin/'
 
 def extract_text_from_pdf(pdf_file_path):
     """Extract text from a PDF file using pytesseract.
@@ -90,6 +90,9 @@ def parse_text(cleaned_text):
                 content_number, content_text = content[i], content[i + 1]
                 pasal_number = re.search(r'(\d+)', content_number).group(1)
 
+                bagian_pasal = re.findall(r'Bagian\s+(\d+)', content_text)
+                bagian = [{f'bagian-{bag_pas}'} for bag_pas in bagian_pasal]
+                
                 # References to other pasal
                 references = re.findall(r'Pasal\s+(\d+)', content_text)
 
@@ -101,7 +104,7 @@ def parse_text(cleaned_text):
                 parsed_text.append({
                     'additional_context': additional_context,
                     'bab': f'bab-{match[0].lower()}',
-                    'bagian': 'none',
+                    'bagian': bagian,
                     'content': content_text.strip(),
                     'context': match[1],
                     'paragraf': 'none',
